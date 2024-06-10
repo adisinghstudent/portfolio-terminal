@@ -45,6 +45,7 @@ def display_portfolio_value(portfolio, stock_prices):
     value = calculate_portfolio_value(portfolio, stock_prices)
     print(f"Total portfolio value: ${value:.2f}")
 
+#main function
 def main():
     while True:
         print("\n0. Add stock")
@@ -52,7 +53,7 @@ def main():
         print("2. Get shares of a stock")
         print("3. Display portfolio")
         print("4. Display portfolio value")
-        print("5. Exit")
+        print("6. Exit")
 
         choice = input("Choose an option: ")
 
@@ -72,7 +73,7 @@ def main():
             display_portfolio(portfolio)
         elif choice == '4':
             display_portfolio_value(portfolio, stock_prices)
-        elif choice == '5':
+        elif choice == '6':
             print("Thanks for using the portofolio manager! ")
             break
         else:
