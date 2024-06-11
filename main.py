@@ -53,7 +53,7 @@ def main():
         print("2. Get shares of a stock")
         print("3. Display portfolio")
         print("4. Display portfolio value")
-        print("6. Exit")
+        print("5. Exit")
 
         choice = input("Choose an option: ")
 
@@ -73,7 +73,7 @@ def main():
             display_portfolio(portfolio)
         elif choice == '4':
             display_portfolio_value(portfolio, stock_prices)
-        elif choice == '6':
+        elif choice == '5':
             print("Thanks for using the portofolio manager! ")
             break
         else:
