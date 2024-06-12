@@ -43,22 +43,32 @@ def display_portfolio_value(portfolio, api_key):
     value = calculate_portfolio_value(portfolio, api_key)
     print(f"Total portfolio value: ${value:.2f}")
 
+def remove_stock(portfolio, stock, shares_to_remove):
+    if stock in portfolio:
+        current_shares = portfolio[stock]['shares']
+        if shares_to_remove >= current_shares:
+            del portfolio[stock]
+            print(f"Removed all shares of {stock} from the portfolio.")
+        else:
+            portfolio[stock]['shares'] -= shares_to_remove
+            print(f"Removed {shares_to_remove} shares of {stock}. Remaining shares: {portfolio[stock]['shares']}")
+    else:
+        print(f"{stock} not found in the portfolio.")
+
 def main():
     api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
     if not api_key:
         print("API key not found. Please set the ALPHA_VANTAGE_API_KEY environment variable.")
         return
     
-
-
-
     portfolio = {}
     while True:
         print("\n1. Add stock")
-        print("2. Get shares of a stock")
-        print("3. Display portfolio")
-        print("4. Display portfolio value")
-        print("5. Exit")
+        print("2. Remove shares of a stock")
+        print("3. Get shares of a stock")
+        print("4. Display portfolio")
+        print("5. Display portfolio value")
+        print("6. Exit")
 
         choice = input("Choose an option: ")
 
@@ -71,19 +81,24 @@ def main():
                 add_stock(portfolio, stock, shares, purchase_date)
             except ValueError:
                 print("Invalid date format. Please enter the date in YYYY-MM-DD format.")
-        elif choice == '2':
+        elif choice == '3':
             stock = input("Enter stock symbol: ").upper()
             shares = get_shares(portfolio, stock)
             purchase_date = get_purchase_date(portfolio, stock)
             print(f"You have {shares} shares of {stock} purchased on {purchase_date}")
-        elif choice == '3':
-            display_portfolio(portfolio)
         elif choice == '4':
-            display_portfolio_value(portfolio, api_key)
+            display_portfolio(portfolio)
         elif choice == '5':
+            display_portfolio_value(portfolio, api_key)
+        elif choice == '2':
+            stock = input("Enter stock symbol: ").upper()
+            shares_to_remove = int(input("Enter number of shares to remove: "))
+            remove_stock(portfolio, stock, shares_to_remove)
+        elif choice == '6':
             break
         else:
             print("Invalid option. Please try again.")
 
 if __name__ == "__main__":
     main()
+
